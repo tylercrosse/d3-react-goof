@@ -1,0 +1,24 @@
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #555;
+  background-color: #eee;
+}
+
+.d3 {
+  font: 10px sans-serif;
+  border: 1px solid #555;
+}
+
+.d3-point {
+  fill: #2B8FF3;
+  stroke: #1D5FA2;
+  stroke-width: 2;
+}

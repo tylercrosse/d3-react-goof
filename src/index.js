@@ -1,6 +1,9 @@
-import d3 from 'd3';
+import * as d3 from 'd3';
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import dataGenerator from './dataGenerator.js';
+import './mainStyle.scss';
 
 const d3Chart = {
   create(el, props, state) {
@@ -25,21 +28,34 @@ const d3Chart = {
       .data(data, (d) => (d.id));
       
     point.enter().append('circle')
-      .attr('class', 'd3-point');
-      
-    point.attr('cx', (d) => (scales.x(d.x)))
+      .attr('class', 'd3-point')
+      .attr('cx', (d) => (scales.x(d.x)))
       .attr('cy', (d) => (scales.y(d.y)))
       .attr('r', (d) => (scales.z(d.z)));
       
     point.exit()
       .remove();
+  },
+  _scales(el, domain) {
+    if (!domain) {
+      return null;
+    }
+    let width = el.offsetWidth;
+    let height = el.offsetHeight;
+    let x = d3.scaleLinear()
+      .range([0, width])
+      .domain(domain.x);
+    let y = d3.scaleLinear()
+      .range([height, 0])
+      .domain(domain.y);
+    let z = d3.scaleLinear()
+      .range([5, 20])
+      .domain([1, 10]);
+    return {x: x, y: y, z: z};
   }
 };
 
-let sampleData = [
-  {id: '5fbmzmtc', x: 7, y: 41, z: 6},
-  {id: 's4f8phwm', x: 11, y: 45, z: 9}
-]
+const sampleData = dataGenerator.generate(50);
 
 class App extends React.Component {
   constructor() {
@@ -52,6 +68,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <h1>Hello React</h1>
         <Chart
           data={this.state.data}
           domain={this.state.domain} />
